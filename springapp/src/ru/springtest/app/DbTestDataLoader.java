@@ -36,17 +36,29 @@ public class DbTestDataLoader {
 		this.messageCount = messageCount;
 	}
 
-	public void load() {		
+	public void load() {
+		List<User> userList = new ArrayList<>();
 
+		User user = null;
 		for(int i=1; i<=userCount; i++) {
-			forSave.add(new User("user" + i, "password" + i));			
+			user = new User("user" + i, "password" + i);
+			forSave.add(user);	
+			userList.add(user);
 		}
 		
 		for(int i=1; i<=messageCount; i++) {
-			forSave.add(new Message("message" + i));			
+			Message m = new Message("message" + i);
+			
+			if(userList.isEmpty()) {
+				forSave.add(m);
+				continue;
+			}
+			
+			user = i-1 < userList.size() ? userList.get(i-1) : userList.get(0); 
+			m.setUser(user);
+			forSave.add(m);		
 		}
 		
 		Lookup.getDataProvider().save(forSave.toArray());
 	}
-
 }
