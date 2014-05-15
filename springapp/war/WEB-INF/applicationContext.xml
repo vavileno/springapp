@@ -23,6 +23,7 @@
                 hibernate.cache.use_query_cache=false
                 hibernate.hbm2ddl.auto=validate
                 hibernate.cache.use_second_level_cache=false
+                hibernate.hbm2ddl.auto=create
             </value>
         </property>
     </bean>	
@@ -36,20 +37,17 @@
     
 	<import resource="hibernate-classes.xml" />
 	
-	<!-- 
-    <bean id="dataSource"
-          class="com.mchange.v2.c3p0.ComboPooledDataSource" scope="singleton" destroy-method="close">
-        <property name="driverClass" value="org.h2.Driver" />
-        <property name="jdbcUrl" value="jdbc:h2:~/test" />
-        <property name="user" value="sa" />
-        <property name="password" value="" />
-        <property name="minPoolSize" value="10" />
-        <property name="maxPoolSize" value="50" />
-        <property name="acquireIncrement" value="2" />
-        <property name="maxIdleTime" value="7200" />
-        <property name="acquireRetryAttempts" value="1" />
-        <property name="acquireRetryDelay" value="2000" />
-    </bean>
-     -->    
+    <bean id="hibernateDataProvider" class="ru.springtest.app.HibernateDataProvider" scope="singleton">
+        <constructor-arg ref="sessionFactory"/>
+    </bean>    
+    
+    <bean id="lookup" class="ru.springtest.app.Lookup">
+        <constructor-arg name="dataProvider" ref="hibernateDataProvider"/>
+    </bean>    
+	
+    <bean id="dbTestData" class="ru.springtest.app.DbTestDataLoader" scope="singleton" init-method="load" depends-on="h2Server, sessionFactory, dataSource, lookup">
+        <constructor-arg name="userCount" value="10" />
+        <constructor-arg name="messageCount" value="10" />
+	</bean>
           
 </beans>
