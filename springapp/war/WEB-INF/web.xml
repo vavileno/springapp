@@ -29,5 +29,9 @@
       <taglib-location>/WEB-INF/tld/spring-form.tld</taglib-location>
     </taglib>
   </jsp-config>  
+  
+	<listener>
+	    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>  
 
 </web-app>

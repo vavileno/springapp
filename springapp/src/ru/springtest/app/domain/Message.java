@@ -2,19 +2,57 @@ package ru.springtest.app.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.TableGenerator;
+
+@Entity(name="_message")
 public class Message {
 	
+    @Id
+    @GeneratedValue(generator = "TableGenerator")
+    @GenericGenerator(name = "TableGenerator", strategy = "org.hibernate.id.enhanced.TableGenerator",
+                      parameters = {
+        @Parameter(name = TableGenerator.SEGMENT_VALUE_PARAM, value = "_lawsuit_costs")
+    })
+    @Column(name = "_id")	
+	private Integer id;
+	
+    @Column(name = "_content")
 	private String content;
 	
+    @Column(name = "_message_time")
 	private Date messageTime;
+    
+    @JoinColumn(name = "_user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @LazyToOne(LazyToOneOption.PROXY)
+    private User user;
 	
 	public Message() {
-		super();
 	}
-
+	
 	public Message(String content) {
 		this.content = content;
 		this.messageTime = new Date();
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getContent() {
