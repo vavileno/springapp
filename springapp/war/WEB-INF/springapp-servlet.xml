@@ -9,7 +9,9 @@
 
   <bean name="/main.htm" class="ru.springtest.app.web.MainController"/>
   
-  <bean name="/usertable.htm" class="ru.springtest.app.web.TableController"/>
+  <bean name="/datatable.htm" class="ru.springtest.app.web.DataTableController"/>
+  
+  <bean name="/enter_message.htm" class="ru.springtest.app.web.EnterMessageController"/>
 
   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
       <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>

@@ -2,6 +2,8 @@ package ru.springtest.app.web;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,9 @@ public class MainController implements Controller {
 //        @SuppressWarnings("unused")
 //		Server h2s = (Server) ctx.getBean("h2Server");
         
-        return new ModelAndView("main", "now", now);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("now", now);
+        
+        return new ModelAndView("main", map);
     }
 }

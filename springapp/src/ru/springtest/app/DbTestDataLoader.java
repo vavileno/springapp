@@ -47,13 +47,13 @@ public class DbTestDataLoader {
 		}
 		
 		for(int i=1; i<=messageCount; i++) {
-			Message m = new Message("message" + i);
+			Message m = new Message("message" + i, null);
 			
 			if(userList.isEmpty()) {
 				forSave.add(m);
 				continue;
 			}
-			
+
 			user = i-1 < userList.size() ? userList.get(i-1) : userList.get(0); 
 			m.setUser(user);
 			forSave.add(m);		

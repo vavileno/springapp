@@ -1,9 +1,15 @@
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
 
+
 <html>
-  <head><title>Hello :: Spring Application</title></head>
+  <head><title>Hello :: Spring Application</title>
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	  <meta http-equiv="Cache-Control" content="no-cache" />
+  </head>
   <body>
-    <h1>Hello - Spring Application</h1>
-    <p>Greetings, it is now <c:out value="${now}"/></p>
+	
+	<p><a href="datatable.htm?page=01">Таблица сообщений</a></p>
+	<p><a href="enter_message.htm">Ввод сообщений</a></p>
+	
   </body>
 </html>

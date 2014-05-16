@@ -23,7 +23,7 @@ public class Message {
     @GeneratedValue(generator = "TableGenerator")
     @GenericGenerator(name = "TableGenerator", strategy = "org.hibernate.id.enhanced.TableGenerator",
                       parameters = {
-        @Parameter(name = TableGenerator.SEGMENT_VALUE_PARAM, value = "_lawsuit_costs")
+        @Parameter(name = TableGenerator.SEGMENT_VALUE_PARAM, value = "_message")
     })
     @Column(name = "_id")	
 	private Integer id;
@@ -35,16 +35,17 @@ public class Message {
 	private Date messageTime;
     
     @JoinColumn(name = "_user_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @LazyToOne(LazyToOneOption.PROXY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @LazyToOne(LazyToOneOption.FALSE)
     private User user;
 	
 	public Message() {
 	}
 	
-	public Message(String content) {
+	public Message(String content, User user) {
 		this.content = content;
 		this.messageTime = new Date();
+		this.user = user;
 	}
 
 	public Integer getId() {
