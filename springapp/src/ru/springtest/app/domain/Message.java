@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyToOne;
@@ -31,8 +33,9 @@ public class Message {
     @Column(name = "_content")
 	private String content;
 	
-    @Column(name = "_message_time")
-	private Date messageTime;
+    @Column(name = "_message_date")
+    @Temporal(TemporalType.DATE)
+	private Date messageDate;
     
     @JoinColumn(name = "_user_id")
     @ManyToOne(fetch = FetchType.EAGER)
@@ -44,7 +47,7 @@ public class Message {
 	
 	public Message(String content, User user) {
 		this.content = content;
-		this.messageTime = new Date();
+		this.messageDate = new Date();
 		this.user = user;
 	}
 
@@ -64,12 +67,12 @@ public class Message {
 		this.content = content;
 	}
 
-	public Date getMessageTime() {
-		return messageTime;
+	public Date getMessageDate() {
+		return messageDate;
 	}
 
-	public void setMessageTime(Date messageTime) {
-		this.messageTime = messageTime;
+	public void setMessageDate(Date messageDate) {
+		this.messageDate = messageDate;
 	}
 
 	public User getUser() {

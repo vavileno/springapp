@@ -15,11 +15,28 @@ public class Paginator extends SimpleTagSupport {
         JspWriter out = getJspContext().getOut();
         return out;
     }
+    
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+ 
+    public void setCurrPage(int currPage) {
+        this.currPage = currPage;
+    }
+ 
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
+ 
+    public void setMaxLinks(int maxLinks) {
+        this.maxLinks = maxLinks;
+    }    
  
     @Override
     public void doTag() throws JspException {
         Writer out = getWriter();
  
+        
         boolean lastPage = currPage == totalPages;
         int pgStart = Math.max(currPage - maxLinks / 2, 1);
         int pgEnd = pgStart + maxLinks;
@@ -32,6 +49,11 @@ public class Paginator extends SimpleTagSupport {
         }
  
         try {
+        	if(totalPages < 2) {
+        		out.write("");
+        		return;
+        	}
+        	
             out.write("<ul class=\"paginatorList\">");
  
             if (currPage > 1)
@@ -74,19 +96,5 @@ public class Paginator extends SimpleTagSupport {
         return link.toString();
     }
  
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
- 
-    public void setCurrPage(int currPage) {
-        this.currPage = currPage;
-    }
- 
-    public void setTotalPages(int totalPages) {
-        this.totalPages = totalPages;
-    }
- 
-    public void setMaxLinks(int maxLinks) {
-        this.maxLinks = maxLinks;
-    }
+
 }
