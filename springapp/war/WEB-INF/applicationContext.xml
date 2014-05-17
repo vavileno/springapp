@@ -50,4 +50,7 @@
         <constructor-arg name="messageCount" value="10" />
 	</bean>
           
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+    
+
 </beans>

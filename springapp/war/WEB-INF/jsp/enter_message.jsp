@@ -1,4 +1,7 @@
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page pageEncoding="UTF-8" %>
 
 <html>
@@ -7,38 +10,31 @@
   <style>
     .error { color: red; }
   </style>  
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta http-equiv="Cache-Control" content="no-cache" />
 </head>
 
 <body>
-<h1>Введите сообщение</h1>
 
-<form action="enter_message.htm" method="POST">
+<fmt:setLocale value="en_US"/>
+<h1><fmt:message key="header.enter.message" /></h1>
 
-	<div style="width: 300px">
-		<div style="float:left">
-			Пользователь: 
-		</div>
-		<div align="right"> 
-			<input type="username" name="username">
-		</div>
-		<div style="float:left">
-			Сообщение:  
-		</div>
-		<div align="right"> 
-			<input type="message_content" name="message_content" />
-		</div>		
-		<div align="right"> 
-			<input type="submit" value="Ввод" />
-		</div>				
-	</div>
-
-<br />	
-</form>
-
+<form:form method="post" action="enter_message.htm" commandName="enterMessageForm">
+    <table>
+        <tr>
+            <td><fmt:message key="label.user" />:</td>
+            <td><form:input path="userName"/></td>
+            <td><form:errors path="userName" cssClass="error" /> </td>
+        </tr>
+        <tr>
+            <td><fmt:message key="label.message" />:</td>
+            <td><form:input path="messageContent"/></td>
+            <td><form:errors path="messageContent" cssClass="error" /> </td>
+        </tr>
+        <tr><td><input type="submit" value="Submit"></td></tr>
+    </table>
+</form:form>
 <br/>
 
-<a href="<c:url value="datatable.htm?page=1"/>">Перейти к истории сообщений</a>
+<a href="<c:url value="datatable.htm?page=1"/>"><fmt:message key="link.to.history" /></a>
 </body>
 </html>

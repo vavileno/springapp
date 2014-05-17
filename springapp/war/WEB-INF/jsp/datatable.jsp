@@ -1,5 +1,6 @@
 <%@ taglib prefix="paginator" uri="/WEB-INF/tlds/Paginator/paginator.tld"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page pageEncoding="UTF-8" %>
 
 <style type="text/css">
@@ -28,23 +29,23 @@
 		<td valign="top">
 			<div style="width: 250px; margin-top: -8;">
 				<fieldset>
-					<legend>Поиск</legend>
+					<legend><fmt:message key="label.search" /></legend>
 					<form action="datatable.htm?page=1" method="POST">
 						<div style="width: 222px">
 							<div style="float:left">
-								С даты:
+								<fmt:message key="label.filter.fromdate" />:
 							</div>
 							<div align="right"> 
 								<input type="text" name="dateFrom" id="datepickerFrom">
 							</div>		
 							<div style="float:left">
-								По дату:
+								<fmt:message key="label.filter.todate" />:
 							</div>
 							<div align="right"> 
 								<input type="text" name="dateTo" id="datepickerTo">
 							</div>		
 							<div style="float:left">
-								Имя
+								<fmt:message key="label.filter.username" />:
 							</div>
 							<div align="right"> 
 								<input type="text" name="userPattern" id="datepickerTo">
@@ -57,15 +58,15 @@
 					</form>
 				</fieldset>
 			<br/>
-			<a href="<c:url value="enter_message.htm"/>">Перейти к вводу сообщений</a>
+			<a href="<c:url value="enter_message.htm"/>"><fmt:message key="link.to.entermessage" /></a>
 			</div>		
 		</td>
 		<td valign="top">
 			<table border="1">
 			    <tr>
-					<th>Дата</th>
-					<th>Пользователь</th>
-					<th>Сообщение</th>
+					<th><fmt:message key="table.column.header.date" /></th>
+					<th><fmt:message key="table.column.header.username" /></th>
+					<th><fmt:message key="table.column.header.message" /></th>
 			    </tr>
 			    <c:forEach items="${messages}" var="message" varStatus="status">
 			        <tr>
