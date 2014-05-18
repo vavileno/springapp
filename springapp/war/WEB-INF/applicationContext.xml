@@ -45,7 +45,7 @@
         <constructor-arg name="dataProvider" ref="hibernateDataProvider"/>
     </bean>    
 	
-    <bean id="dbTestData" class="ru.springtest.app.DbTestDataLoader" scope="singleton" init-method="load" depends-on="h2Server, sessionFactory, dataSource, lookup">
+    <bean id="dbTestData" class="ru.springtest.app.util.DbTestDataLoader" scope="singleton" init-method="load" depends-on="h2Server, sessionFactory, dataSource, lookup">
         <constructor-arg name="userCount" value="10" />
         <constructor-arg name="messageCount" value="10" />
 	</bean>

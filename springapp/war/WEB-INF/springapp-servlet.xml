@@ -9,13 +9,13 @@
 
   <!-- the application context definition for the springapp DispatcherServlet -->
   
-	<mvc:annotation-driven />
-
-  <bean name="/main.htm" class="ru.springtest.app.web.MainController"/>
+  <mvc:annotation-driven />
   
-  <bean name="/datatable.htm" class="ru.springtest.app.web.DataTableController" />
+  <bean name="/datatable.htm" class="ru.springtest.app.web.controllers.DataTableController" />
   
-  <bean name="/enter_message.htm" class="ru.springtest.app.web.EnterMessageController"/>
+  <bean name="/enter_message.htm" class="ru.springtest.app.web.controllers.EnterMessageController"/>
+  
+  <bean name="/message_saved.htm" class="ru.springtest.app.web.controllers.MessageSavedController"/>
 
   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
       <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
@@ -23,7 +23,9 @@
       <property name="suffix" value=".jsp"></property>        
   </bean>  
   
-  <bean id="userValidator" class="ru.springtest.app.validators.EnterFormValidator" />  
+  <bean id="enterMessageValidator" class="ru.springtest.app.validators.EnterFormValidator" />  
+  
+  <bean id="filterValidator" class="ru.springtest.app.validators.EnterFormValidator" />
 
   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
    	<property name="basename" value="messages"/>

@@ -2,20 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page pageEncoding="UTF-8" %>
+
+<%@ page contentType="text/html; charset=utf-8" %>
 
 <html>
 <head>
   <title></title>
   <style>
-    .error { color: red; }
-  </style>  
-<meta http-equiv="Cache-Control" content="no-cache" />
+     .error { color: red; } 
+  </style>
 </head>
 
 <body>
 
-<fmt:setLocale value="en_US"/>
 <h1><fmt:message key="header.enter.message" /></h1>
 
 <form:form method="post" action="enter_message.htm" commandName="enterMessageForm">

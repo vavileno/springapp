@@ -1,4 +1,4 @@
-package ru.springtest.app;
+package ru.springtest.app.util;
 
 import java.sql.SQLException;
 

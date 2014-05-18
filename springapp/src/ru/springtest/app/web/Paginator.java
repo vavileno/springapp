@@ -1,4 +1,4 @@
-package ru.springtest.app;
+package ru.springtest.app.web;
 
 import java.io.Writer;
 import javax.servlet.jsp.JspWriter;

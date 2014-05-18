@@ -46,10 +46,14 @@ public class Message {
 	}
 	
 	public Message(String content, User user) {
-		this.content = content;
-		this.messageDate = new Date();
-		this.user = user;
+		this(content, user, null);
 	}
+	
+	public Message(String content, User user, Date messageDate) {
+		this.content = content;
+		this.messageDate = messageDate == null ? new Date() : messageDate;
+		this.user = user;
+	}	
 
 	public Integer getId() {
 		return id;

@@ -1,8 +1,6 @@
-package ru.springtest.app.web;
+package ru.springtest.app.web.controllers;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,34 +35,27 @@ public class EnterMessageController {
 	public String createUserAndMessage(@ModelAttribute("enterMessageForm") @Validated EnterMessageForm enterMessageForm, 
 			BindingResult result, ModelMap model) throws Exception {
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
 		if(result.hasErrors()) {
 			return "enter_message";
 		}
 		
-		map.put("saveResult", "");
+		createAndSave(enterMessageForm.getUserName(), enterMessageForm.getMessageContent());
 		
-		String userName = enterMessageForm.getUserName();
-		String messageContent = enterMessageForm.getMessageContent();
+		return "message_saved";
+	}
+
+	private void createAndSave(String userName, String messageContent) {
+		List<User> existingUser= Lookup.getDataProvider().findByProperty(User.class, "name", userName, 0, -1);
 		
-		if(userName != null && messageContent != null) {
-			
-			List<User> existingUser= Lookup.getDataProvider().findByProperty(User.class, "name", userName, 0, -1);
-			
-			User user = null;
-			if(existingUser.isEmpty()) {
-				user = new User(userName, userName);
-			}
-			else {
-				user = existingUser.get(0);
-			}
-			
-			Lookup.getDataProvider().save(user, new Message(messageContent, user));
-//			map.put("saveResult", "Message saved.");
+		User user = null;
+		if(existingUser.isEmpty()) {
+			user = new User(userName, userName);
 		}
-		
-		return "enter_message";
+		else {
+			user = existingUser.get(0);
+		}
+			
+		Lookup.getDataProvider().save(user, new Message(messageContent, user));		
 	}
 
 }

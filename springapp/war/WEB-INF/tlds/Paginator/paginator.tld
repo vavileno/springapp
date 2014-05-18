@@ -6,7 +6,7 @@
  
   <tag>
     <name>display</name>
-    <tag-class>ru.springtest.app.Paginator</tag-class>
+    <tag-class>ru.springtest.app.web.Paginator</tag-class>
     <body-content>empty</body-content>
     <attribute>
       <name>uri</name>

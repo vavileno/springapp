@@ -17,16 +17,18 @@ public class EnterFormValidator implements Validator  {
 
 	@Override
 	public void validate(Object arg0, Errors errors) {
-		EnterMessageForm user = (EnterMessageForm)arg0;
+		EnterMessageForm enterMessageForm = (EnterMessageForm)arg0;
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "field.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "messageContent", "field.required");
-		if(!user.getUserName().matches(userNamePattern)) {
-			errors.rejectValue("userName","field.required.alphanumeric");
+		if(errors.getFieldError("userName")== null) {
+			if(!enterMessageForm.getUserName().matches(userNamePattern)) {
+				errors.rejectValue("userName","field.required.alphanumeric");
+			}
+			if(enterMessageForm.getUserName().length()>48) {
+				errors.rejectValue("userName","field.length.required48");
+			}
 		}
-		if(user.getUserName().length()>48) {
-			errors.rejectValue("userName","field.length.required48");
-		}
-		if(user.getMessageContent().length()>48) {
+		if(enterMessageForm.getMessageContent().length()>48) {
 			errors.rejectValue("messageContent","field.length.required48");
 		}		
 	}

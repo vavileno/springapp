@@ -1,8 +1,10 @@
-package ru.springtest.app;
+package ru.springtest.app.util;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import ru.springtest.app.Lookup;
 import ru.springtest.app.domain.Message;
 import ru.springtest.app.domain.User;
 
@@ -38,6 +40,7 @@ public class DbTestDataLoader {
 
 	public void load() {
 		List<User> userList = new ArrayList<>();
+		Calendar c = Calendar.getInstance();
 
 		User user = null;
 		for(int i=1; i<=userCount; i++) {
@@ -47,7 +50,8 @@ public class DbTestDataLoader {
 		}
 		
 		for(int i=1; i<=messageCount; i++) {
-			Message m = new Message("message" + i, null);
+			c.add(Calendar.DAY_OF_MONTH, -1);
+			Message m = new Message("message" + i, null, c.getTime());
 			
 			if(userList.isEmpty()) {
 				forSave.add(m);
