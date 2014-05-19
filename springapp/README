@@ -1,0 +1,7 @@
+
+1. Необходимо добавить библиотеки из /war/WEB-INF/lib в classpath
+2. Компиляция - ant build
+3. Компиляция тестов - ant buildtests
+4. Запуск тестов - ant tests
+5. Для запуска приложения нужно запустить класс ru.springtest.app.util.TomcatEmbeddedSrv. 
+Либо нужно исправить build.properties под свой Tomcat и запустить ant deploy
