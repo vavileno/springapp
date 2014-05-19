@@ -55,6 +55,7 @@ public class EnterMessageController {
         binder.setValidator(new EnterFormValidator());
     }    
 
+	// Отображение формы для ввода сообщений
 	@RequestMapping(value="enter_message", method=RequestMethod.GET)
     public ModelAndView showForm(EnterMessageForm enterMessageForm) {
 		error = false;
@@ -66,25 +67,30 @@ public class EnterMessageController {
         return new ModelAndView("enter_message", map);
     }	
 	
+	// Ввод сообщения в БД
 	@RequestMapping(value="enter_message", method = RequestMethod.POST)
 	public ModelAndView createUserAndMessage(@ModelAttribute("enterMessageForm") @Validated EnterMessageForm enterMessageForm, 
 			BindingResult result, ModelMap model) throws Exception {
 		error = false;
 		errorString = null;
 		
+		// Если ошибки на форме
 		if(result.hasErrors()) {
 			return new ModelAndView("enter_message");
 		}
 		
-		createAndSave(enterMessageForm.getUserName(), enterMessageForm.getMessageContent());
+		String form = createAndSave(enterMessageForm.getUserName(), enterMessageForm.getMessageContent());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("error", error);
 		map.put("errorString", errorString);
-		return new ModelAndView("message_saved", map);
+		
+		// Если запись произошла корректно, то отображается страница "Сообщение сохранено"
+		// Иначе отображается форма для ввода сообщения
+		return new ModelAndView(form, map);
 	}
 
-	private void createAndSave(String userName, String messageContent) {
+	private String createAndSave(String userName, String messageContent) {
 		List<User> existingUser= Lookup.getDataProvider().findByProperty(User.class, "name", userName, 0, -1);
 		
 		User user = null;
@@ -102,7 +108,10 @@ public class EnterMessageController {
 			log.error(daoe.getMessage(), daoe);
 			error = true;
 			errorString = ResourceBundle.getBundle("messages").getString("error.database");
+			return "enter_message";
 		}
+		
+		return "message_saved";
 	}
 
 }

@@ -4,6 +4,10 @@ import java.text.SimpleDateFormat;
 
 import ru.springtest.app.dao.HibernateDataProvider;
 
+/**
+ * Хранит вспомогательные объекты доступные для приложения
+ * 
+ * */
 public class Lookup {
     
     private static final SimpleDateFormat sDateFormat = new SimpleDateFormat("MM/dd/yyyy");

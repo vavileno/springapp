@@ -22,21 +22,26 @@ public class FilterDataFormValidator implements Validator{
 		FilterDataForm filterForm = (FilterDataForm)arg0;
 
 		if(filterForm.getUserPattern() != null && !filterForm.getUserPattern().isEmpty()) {
+			
+			// Имя пользователя должно состоять из букв латинского или русского алфавита и цифр
 			if(!filterForm.getUserPattern().matches(userNamePattern)) {
 				errors.rejectValue("userPattern","field.required.alphanumeric");
 			}
+			// Длина имени пользователя не должна быть более 48 символов
 			if(filterForm.getUserPattern().length()>48) {
 				errors.rejectValue("userPattern","field.length.required48");
 			}
 		}
 		
 		if(filterForm.getFromDate() != null && !filterForm.getFromDate().isEmpty()) {
+			// Дата должна быть в формате MMDDYYYY
 			if(!filterForm.getFromDate().matches(datePattern)) {
 				errors.rejectValue("userPattern","field.date.mmddyyyy.expected");
 			}
 		}
 		
 		if(filterForm.getToDate() != null && !filterForm.getToDate().isEmpty()) {
+			// Дата должна быть в формате MMDDYYYY			
 			if(!filterForm.getToDate().matches(datePattern)) {
 				errors.rejectValue("userPattern","field.date.mmddyyyy.expected");
 			}

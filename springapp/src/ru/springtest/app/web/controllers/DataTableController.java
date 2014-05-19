@@ -33,6 +33,7 @@ public class DataTableController {
     
     private static final int RECORDS_ON_PAGE = 10;
     
+    // Кэш отображаемых записей
     private static List<Message> messages;
     
     private boolean error;
@@ -60,6 +61,9 @@ public class DataTableController {
         binder.setValidator(new FilterDataFormValidator());
     } 
     
+	/**
+	 * По умолчанию отображаются все записи из БД
+	 * */
 	@RequestMapping(value="datatable", method=RequestMethod.GET)
     public ModelAndView showForm(FilterDataForm filterDataForm) {
 		error = false;
@@ -75,7 +79,11 @@ public class DataTableController {
         return mv.addAllObjects(map);
     }	    
 
-
+	/**
+	 * Если параметры фильтра корректны, то из БД извлекаются соответствующие записи
+	 * Иначе отображаются кэшированные данные
+	 * 
+	 * */
 	@RequestMapping(value="datatable", method = RequestMethod.POST)
 	public ModelAndView searchresult(@ModelAttribute("filterDataForm") @Validated FilterDataForm filterDataForm, 
 			BindingResult result, ModelMap model) throws Exception {
@@ -84,6 +92,7 @@ public class DataTableController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		// Ошибки в фильтре
 		if(result.hasErrors()) {
 			requestCacheData(filterDataForm, map);
 			ModelAndView mv = new ModelAndView("datatable"); 
@@ -95,6 +104,9 @@ public class DataTableController {
         return mv.addAllObjects(map);
     }
 	
+	/**
+	 * Если кэш пустой, то возвращаются все записи
+	 * */
 	private void requestCacheData(FilterDataForm filterDataForm, Map<String, Object> map) {
 		if(messages == null) {
 			filterDataForm.setFromDate(null);
@@ -137,9 +149,14 @@ public class DataTableController {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("fromDate", fromDate);
 		params.put("toDate", toDate);
+		
+		// Построение запроса с указанными параметрами фильтра
 		StringBuilder hql = buildHql(params, userPattern);	
+		
+		// Узнаем количество записей с указанными параметрами фильтра
 		int resultCount = Lookup.getDataProvider().getResultCount(hql.toString(), params);
 		
+		// Переменные для пагинатора
 		int pageNum = Integer.parseInt(filterDataForm.getPage());
 		int firstResult = pageNum * RECORDS_ON_PAGE - RECORDS_ON_PAGE;
 		int maxResult = firstResult + RECORDS_ON_PAGE > resultCount ? resultCount - firstResult : RECORDS_ON_PAGE;

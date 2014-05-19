@@ -8,6 +8,10 @@ import ru.springtest.app.Lookup;
 import ru.springtest.app.domain.Message;
 import ru.springtest.app.domain.User;
 
+/**
+ * Загружает данные в БД для выполнения тестов. 
+ * 
+ * */
 public class DbTestDataLoader {
 	
 	private Integer userCount;
@@ -38,6 +42,9 @@ public class DbTestDataLoader {
 		this.messageCount = messageCount;
 	}
 
+	// Загружает 10 пользователей вида "user" + i
+	// Загружает 10 сообщений вида "message" + i с интервалом в 1 день
+	// Каждому сообщению соответствует пользователь с соответствующим индексом i
 	public void load() {
 		List<User> userList = new ArrayList<>();
 		Calendar c = Calendar.getInstance();

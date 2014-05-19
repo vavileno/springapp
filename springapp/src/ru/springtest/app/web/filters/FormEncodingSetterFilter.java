@@ -9,6 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+/**
+ * Исправляет кодировку для Tomcat
+ * */
 public class FormEncodingSetterFilter implements Filter{
 
     private static final String FILTERABLE_CONTENT_TYPE="application/x-www-form-urlencoded";

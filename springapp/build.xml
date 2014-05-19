@@ -138,7 +138,7 @@
 
 	<property name="test.dir" value="test"/>
         
-    <target name="buildtests" description="Compile test tree java files">
+    <target name="buildtests" depends="build" description="Compile test tree java files">
         <mkdir dir="${build.dir}"/>
         <javac destdir="${build.dir}" source="1.7" target="1.7" debug="true"
             deprecation="false" optimize="false" failonerror="true">
