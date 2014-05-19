@@ -9,7 +9,7 @@ public class TestUtil {
 
     public static void springStart() {
         if (context == null) {
-            context = new FileSystemXmlApplicationContext("applicationContext.xml");
+            context = new FileSystemXmlApplicationContext("war/WEB-INF/applicationContext.xml");
         }
     }
 

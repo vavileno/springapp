@@ -37,7 +37,7 @@
     
 	<import resource="hibernate-classes.xml" />
 	
-    <bean id="hibernateDataProvider" class="ru.springtest.app.HibernateDataProvider" scope="singleton">
+    <bean id="hibernateDataProvider" class="ru.springtest.app.dao.HibernateDataProvider" scope="singleton">
         <constructor-arg ref="sessionFactory"/>
     </bean>    
     

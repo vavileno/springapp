@@ -90,5 +90,12 @@
 	<form:errors path="fromDate" cssClass="error" />
 	<form:errors path="toDate" cssClass="error" />
 	<form:errors path="userPattern" cssClass="error" />
+	<div class="error">
+		<c:if test="${error}">
+		    <p>
+				<c:out value="${errorString}" />
+		    <p>
+		</c:if>
+	</div>
 </form:form>
 </body>

@@ -33,6 +33,13 @@
     </table>
 </form:form>
 <br/>
+<div class="error">
+	<c:if test="${error}">
+	    <p>
+			<c:out value="${errorString}" />
+	    <p>
+	</c:if>
+</div>
 
 <a href="<c:url value="datatable.htm?page=1"/>"><fmt:message key="link.to.history" /></a>
 </body>

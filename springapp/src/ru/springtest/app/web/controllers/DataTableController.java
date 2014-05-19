@@ -5,9 +5,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -27,24 +29,49 @@ import ru.springtest.app.web.formdata.FilterDataForm;
 @Controller
 public class DataTableController {
 	
-    private static final Logger logger = LoggerFactory.getLogger(DataTableController.class);
+    private static final Logger log = LoggerFactory.getLogger(DataTableController.class);
     
     private static final int RECORDS_ON_PAGE = 10;
     
     private static List<Message> messages;
     
-    @InitBinder
+    private boolean error;
+    
+    private String errorString;
+    
+    public boolean isError() {
+		return error;
+	}
+
+	public void setError(boolean error) {
+		this.error = error;
+	}
+
+	public String getErrorString() {
+		return errorString;
+	}
+
+	public void setErrorString(String errorString) {
+		this.errorString = errorString;
+	}
+
+	@InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(new FilterDataFormValidator());
     } 
     
 	@RequestMapping(value="datatable", method=RequestMethod.GET)
     public ModelAndView showForm(FilterDataForm filterDataForm) {
+		error = false;
+		errorString = null;
+		
         Map<String, Object> map = new HashMap<String, Object>();
         
         requestData(filterDataForm, map);
         
         ModelAndView mv = new ModelAndView("datatable"); 
+        map.put("error", error);
+        map.put("errorString", errorString);
         return mv.addAllObjects(map);
     }	    
 
@@ -52,6 +79,9 @@ public class DataTableController {
 	@RequestMapping(value="datatable", method = RequestMethod.POST)
 	public ModelAndView searchresult(@ModelAttribute("filterDataForm") @Validated FilterDataForm filterDataForm, 
 			BindingResult result, ModelMap model) throws Exception {
+		error = false;
+		errorString = null;
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		if(result.hasErrors()) {
@@ -82,6 +112,8 @@ public class DataTableController {
 		map.put("totalPages", totalPages);
 		map.put("searchUri", "datatable.htm?page=" + pageNum);  
 		map.put("messages", messages);		
+		map.put("error", error);
+		map.put("errorString", errorString);		
 	}
 	
 	private void requestData(FilterDataForm filterDataForm, Map<String, Object> map) {
@@ -99,7 +131,7 @@ public class DataTableController {
 				toDate = Lookup.getSimpleDateFormat().parse(toDateString);
 			}
 		} catch (ParseException e) {
-			logger.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -113,12 +145,21 @@ public class DataTableController {
 		int maxResult = firstResult + RECORDS_ON_PAGE > resultCount ? resultCount - firstResult : RECORDS_ON_PAGE;
 		int totalPages =  (resultCount == resultCount/RECORDS_ON_PAGE * RECORDS_ON_PAGE) ? resultCount/RECORDS_ON_PAGE : resultCount/RECORDS_ON_PAGE + 1;
 		
-		messages = (List<Message>) Lookup.getDataProvider().findByHQL(hql.toString(), params, firstResult, maxResult);
+		try {
+			messages = (List<Message>) Lookup.getDataProvider().findByHQL(hql.toString(), params, firstResult, maxResult);
+		}
+		catch(DataAccessException daoe) {
+			log.error(daoe.getMessage(), daoe);
+			error = true;
+			errorString = ResourceBundle.getBundle("messages").getString("error.database");
+		}
 		
 		map.put("page", pageNum);
 		map.put("totalPages", totalPages);
 		map.put("searchUri", "datatable.htm?page=" + pageNum);  
 		map.put("messages", messages);
+		map.put("error", error);
+		map.put("errorString", errorString);
 	}
 
 	private StringBuilder buildHql(Map<String, Object> params, String userPattern) {

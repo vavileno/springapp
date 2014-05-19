@@ -2,6 +2,8 @@ package ru.springtest.app;
 
 import java.text.SimpleDateFormat;
 
+import ru.springtest.app.dao.HibernateDataProvider;
+
 public class Lookup {
     
     private static final SimpleDateFormat sDateFormat = new SimpleDateFormat("MM/dd/yyyy");

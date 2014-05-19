@@ -1,19 +1,16 @@
 package ru.springtest.app.web.controllers;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
+@Controller
+public class MessageSavedController {
 
-public class MessageSavedController implements Controller {
-
-	@Override
-	public ModelAndView handleRequest(HttpServletRequest arg0,
-			HttpServletResponse arg1) throws Exception {
+	@RequestMapping(value="message_saved", method=RequestMethod.GET)
+	public String showMessageSaved() { 
 		
-		return new ModelAndView("message_saved");
+		return "message_saved";
 	}
-	
 
 }
